@@ -1,5 +1,7 @@
 package com.example.newsapptask.auth_feature.presentation.components
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -41,6 +43,7 @@ import androidx.navigation.NavController
 import com.example.newsapptask.R
 import com.example.newsapptask.auth_feature.presentation.viewmodels.LoginViewModel
 import com.example.newsapptask.core.utils.Resource
+import com.example.newsapptask.news_feature.NewsActivity
 import kotlinx.coroutines.flow.collectLatest
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -60,7 +63,9 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
 
                 is Resource.Success -> {
                     Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
-                    navController.navigate("home")
+
+                    context.startActivity(Intent(context, NewsActivity::class.java))
+                    (context as? Activity)?.finish()
                 }
 
                 is Resource.Error -> {
