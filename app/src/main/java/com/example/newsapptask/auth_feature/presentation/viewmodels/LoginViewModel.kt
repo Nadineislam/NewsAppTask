@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val loginDataStore: LoginDataStore // Inject the LoginDataStore
+    private val loginDataStore: LoginDataStore
 ) : ViewModel() {
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
@@ -24,21 +24,18 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableSharedFlow<Resource<User?>>()
     val loginState: SharedFlow<Resource<User?>> get() = _loginState
 
-    fun login() {
-        viewModelScope.launch {
-            _loginState.emit(Resource.Loading())
-            try {
-                val user = loginUseCase(email.value, password.value)
-                if (user != null) {
-                    // Save login state after successful login
-                    loginDataStore.saveLoginState(true)
-                    _loginState.emit(Resource.Success(user))
-                } else {
-                    _loginState.emit(Resource.Error("Incorrect email or password"))
-                }
-            } catch (e: Exception) {
-                _loginState.emit(Resource.Error(e.message ?: "Login failed"))
+    fun login() = viewModelScope.launch {
+        _loginState.emit(Resource.Loading())
+        try {
+            val user = loginUseCase(email.value, password.value)
+            if (user != null) {
+                loginDataStore.saveLoginState(true)
+                _loginState.emit(Resource.Success(user))
+            } else {
+                _loginState.emit(Resource.Error("Incorrect email or password"))
             }
+        } catch (e: Exception) {
+            _loginState.emit(Resource.Error(e.message ?: "Login failed"))
         }
     }
 }

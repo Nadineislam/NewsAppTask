@@ -22,17 +22,16 @@ class RegisterViewModel @Inject constructor(
     private val _registrationState = MutableSharedFlow<Resource<Boolean>>()
     val registrationState get() = _registrationState
 
-    fun register() {
-        viewModelScope.launch {
-            _registrationState.emit(Resource.Loading())
-            try {
-                val user =
-                    User(username = username.value, email = email.value, password = password.value)
-                registerUseCase(user)
-                _registrationState.emit(Resource.Success(true))
-            } catch (e: Exception) {
-                _registrationState.emit(Resource.Error(e.message ?: "Registration failed"))
-            }
+    fun register() = viewModelScope.launch {
+        _registrationState.emit(Resource.Loading())
+        try {
+            val user =
+                User(username = username.value, email = email.value, password = password.value)
+            registerUseCase(user)
+            _registrationState.emit(Resource.Success(true))
+        } catch (e: Exception) {
+            _registrationState.emit(Resource.Error(e.message ?: "Registration failed"))
         }
     }
+
 }
