@@ -43,7 +43,7 @@ import androidx.navigation.NavController
 import com.example.newsapptask.R
 import com.example.newsapptask.auth_feature.presentation.viewmodels.LoginViewModel
 import com.example.newsapptask.core.utils.Resource
-import com.example.newsapptask.news_feature.NewsActivity
+import com.example.newsapptask.news_feature.presentation.activity.NewsActivity
 import kotlinx.coroutines.flow.collectLatest
 
 @RequiresApi(Build.VERSION_CODES.O)

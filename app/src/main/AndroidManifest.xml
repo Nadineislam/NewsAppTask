@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MyApplication"
@@ -14,7 +15,7 @@
         android:theme="@style/Theme.NewsAppTask"
         tools:targetApi="31">
         <activity
-            android:name=".news_feature.NewsActivity"
+            android:name=".news_feature.presentation.activity.NewsActivity"
             android:exported="false"
             android:label="@string/title_activity_news"
             android:theme="@style/Theme.NewsAppTask" />

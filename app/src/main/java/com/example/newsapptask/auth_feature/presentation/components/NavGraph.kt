@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapptask.auth_feature.data.datastore.LoginDataStore
-import com.example.newsapptask.news_feature.NewsActivity
+import com.example.newsapptask.news_feature.presentation.activity.NewsActivity
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
