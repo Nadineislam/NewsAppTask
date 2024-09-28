@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+    id ("kotlin-parcelize")
+
 }
 
 android {
@@ -20,6 +22,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField ("String", "BASE_URL", "\"https://newsapi.org\"")
+        buildConfigField ("String", "API_KEY", "\"78e1b49e38db4fdaaef8a0f9c5acd672\"")
     }
 
     buildTypes {
@@ -40,6 +44,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -47,6 +52,23 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            resValue ("string", "API_KEY", "\"78e1b49e38db4fdaaef8a0f9c5acd672\"")
+            resValue ("string", "BASE_URL", "\"https://newsapi.org\"")
+        }
+        release {
+            resValue ("string", "API_KEY", "\"78e1b49e38db4fdaaef8a0f9c5acd672\"")
+            resValue ("string", "BASE_URL", "\"https://newsapi.org\"")
         }
     }
 }
@@ -94,5 +116,18 @@ dependencies {
     // Coroutine
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 }
