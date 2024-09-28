@@ -12,23 +12,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.newsapptask.news_feature.presentation.viewmodels.HomeNewsViewModel
 import com.google.gson.Gson
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeNewsViewModel = hiltViewModel()) {
-    val breakingNews by viewModel.breakingNews.collectAsState()
-    val newsByCategory by viewModel.newsByCategory.collectAsState()
+    val breakingNews by viewModel.breakingNews.collectAsStateWithLifecycle()
+    val newsByCategory by viewModel.newsByCategory.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
-    val selectedCategory by viewModel.selectedCategory.collectAsState()
+    val selectedCategory by viewModel.selectedCategory.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
         ResourceHandler(
