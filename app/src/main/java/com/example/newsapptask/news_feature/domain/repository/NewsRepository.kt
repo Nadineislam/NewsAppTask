@@ -7,4 +7,6 @@ interface NewsRepository {
     suspend fun getNewsByCategory(category: String): Response<NewsResponse>
 
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int): Response<NewsResponse>
+
+    suspend fun getSearchNews(search: String, pageNumber: Int): Response<NewsResponse>
 }

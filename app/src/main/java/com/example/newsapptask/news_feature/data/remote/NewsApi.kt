@@ -13,10 +13,20 @@ interface NewsApi {
         @Query("page") pageNumber: Int = 1,
         @Query("apikey") apiKey: String = BuildConfig.API_KEY
     ): Response<NewsResponse>
-    @GET("v2/top-headlines") // Base URL
+    @GET("v2/top-headlines")
     suspend fun getNewsByCategory(
-        @Query("country") country: String="us", // Country as a query parameter
-        @Query("category") category: String, // Category as a query parameter
-        @Query("apiKey") apiKey: String = BuildConfig.API_KEY,// Default API key
+        @Query("country") country: String="us",
+        @Query("category") category: String,
+        @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
+    ): Response<NewsResponse>
+
+    @GET("v2/everything")
+    suspend fun searchForNews(
+        @Query("q")
+        searchQuery: String,
+        @Query("page")
+        pageNumber: Int = 1,
+        @Query("apikey")
+        apiKey: String = BuildConfig.API_KEY
     ): Response<NewsResponse>
 }
