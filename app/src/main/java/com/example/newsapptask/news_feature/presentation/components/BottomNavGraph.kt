@@ -26,6 +26,7 @@ fun BottomNavGraph(
         composable(BottomBarScreen.Favorites.route) {
         }
         composable(BottomBarScreen.Search.route) {
+            SearchScreen(navController = navController)
         }
         composable(
             "article_details?article={article}",

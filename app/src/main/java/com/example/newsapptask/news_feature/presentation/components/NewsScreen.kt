@@ -44,7 +44,7 @@ fun NewsList(newsArticles: List<Article>, onArticleClick: (Article) -> Unit) {
 }
 
 @Composable
-fun NewsItem(article: Article, onClick: () -> Unit) {
+fun NewsItem(article: Article, onClick: () -> Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
