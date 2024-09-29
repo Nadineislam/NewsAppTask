@@ -14,6 +14,7 @@
 
 * MVVM 
 * Retrofit
+* Clean Architecture
 * Room Database
 * Coroutines 
 * Dagger Hilt
