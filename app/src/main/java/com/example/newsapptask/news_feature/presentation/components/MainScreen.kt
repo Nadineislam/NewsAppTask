@@ -22,13 +22,28 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    Scaffold(bottomBar = { BottomBar(navController = navController) }) { paddingValues ->
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+
+    val showBottomBar = when (currentBackStackEntry?.destination?.route) {
+        "webview?url={url}" -> false
+        else -> true
+    }
+
+    Scaffold(
+        bottomBar = {
+            if (showBottomBar) {
+                BottomBar(navController = navController)
+            }
+        }
+    ) { paddingValues ->
         BottomNavGraph(
             navController = navController,
             modifier = Modifier.padding(paddingValues)
         )
     }
 }
+
 
 @Composable
 fun BottomBar(navController: NavHostController) {

@@ -37,7 +37,16 @@ fun BottomNavGraph(
             val article = articleJson?.let { Gson().fromJson(it, Article::class.java) }
 
             article?.let {
-                ArticleDetailsScreen(article = it)
+                ArticleDetailsScreen(article = it, navController = navController)
+            }
+        }
+        composable(
+            "webview?url={url}",
+            arguments = listOf(navArgument("url") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url")
+            url?.let {
+                WebViewScreen(url = it)
             }
         }
     }
