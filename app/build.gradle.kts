@@ -23,7 +23,7 @@ android {
             useSupportLibrary = true
         }
         buildConfigField ("String", "BASE_URL", "\"https://newsapi.org\"")
-        buildConfigField ("String", "API_KEY", "\"ccd62d03483d432fad649058b3b9fdc2\"")
+        buildConfigField ("String", "API_KEY", "\"344e477ac241420db1e7501341b3ff48\"")
     }
 
     buildTypes {
@@ -63,11 +63,11 @@ android {
             )
         }
         debug {
-            resValue ("string", "API_KEY", "\"ccd62d03483d432fad649058b3b9fdc2\"")
+            resValue ("string", "API_KEY", "\"344e477ac241420db1e7501341b3ff48\"")
             resValue ("string", "BASE_URL", "\"https://newsapi.org\"")
         }
         release {
-            resValue ("string", "API_KEY", "\"ccd62d03483d432fad649058b3b9fdc2\"")
+            resValue ("string", "API_KEY", "\"344e477ac241420db1e7501341b3ff48\"")
             resValue ("string", "BASE_URL", "\"https://newsapi.org\"")
         }
     }

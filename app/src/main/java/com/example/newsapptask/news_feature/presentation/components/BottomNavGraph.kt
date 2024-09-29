@@ -24,6 +24,7 @@ fun BottomNavGraph(
             HomeScreen(navController)
         }
         composable(BottomBarScreen.Favorites.route) {
+            FavoritesScreen( navController = navController)
         }
         composable(BottomBarScreen.Search.route) {
             SearchScreen(navController = navController)

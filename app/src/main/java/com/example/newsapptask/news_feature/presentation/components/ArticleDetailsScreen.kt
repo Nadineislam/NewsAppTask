@@ -2,6 +2,7 @@ package com.example.newsapptask.news_feature.presentation.components
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +14,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,15 +34,35 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapptask.news_feature.data.remote.models.Article
+import com.example.newsapptask.news_feature.presentation.viewmodels.NewsDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleDetailsScreen(
-    article: Article
+    article: Article,viewModel: NewsDetailsViewModel= hiltViewModel()
 ) {
-    Scaffold { innerPadding ->
+    val context = LocalContext.current
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.upsertNews(article)
+                    Toast.makeText(context, "Article saved!", Toast.LENGTH_SHORT).show()
+                },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "Save Article",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -97,7 +122,6 @@ fun ArticleDetailsScreen(
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            val context = LocalContext.current
             Button(
                 onClick = {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
