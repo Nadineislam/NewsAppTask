@@ -10,6 +10,10 @@
   * Favorites: Mark articles as favorites or delete them using Room for local caching.
   * Offline Access: View previously fetched news articles even without an internet connection, thanks to caching.
 
+# Preview
+
+
+
  # Libraries And Technoligies used
 
 * MVVM 
