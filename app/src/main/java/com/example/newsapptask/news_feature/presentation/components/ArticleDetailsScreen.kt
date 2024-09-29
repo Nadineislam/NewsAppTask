@@ -1,7 +1,8 @@
 package com.example.newsapptask.news_feature.presentation.components
 
-import android.content.Intent
 import android.net.Uri
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -33,16 +34,33 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapptask.news_feature.data.remote.models.Article
 import com.example.newsapptask.news_feature.presentation.viewmodels.NewsDetailsViewModel
 
+@Composable
+fun WebViewScreen(url: String) {
+    val context = LocalContext.current
+    AndroidView(
+        factory = {
+            WebView(context).apply {
+                webViewClient = WebViewClient()
+                loadUrl(url)
+            }
+        },
+        modifier = Modifier.fillMaxSize()
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleDetailsScreen(
-    article: Article,viewModel: NewsDetailsViewModel= hiltViewModel()
+    article: Article,
+    viewModel: NewsDetailsViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val context = LocalContext.current
 
@@ -93,20 +111,18 @@ fun ArticleDetailsScreen(
                 fontSize = 22.sp
             )
 
-
-                Text(
-                    text = "By ${article.author ?: "Unknown"}",
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Published at: ${article.publishedAt ?: "Unknown Date"}",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
+            Text(
+                text = "By ${article.author ?: "Unknown"}",
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "Published at: ${article.publishedAt ?: "Unknown Date"}",
+                style = MaterialTheme.typography.bodySmall,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
             Divider(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -124,8 +140,7 @@ fun ArticleDetailsScreen(
 
             Button(
                 onClick = {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-                    ContextCompat.startActivity(context, intent, null)
+                    navController.navigate("webview?url=${Uri.encode(article.url)}")
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
@@ -135,4 +150,5 @@ fun ArticleDetailsScreen(
         }
     }
 }
+
 
