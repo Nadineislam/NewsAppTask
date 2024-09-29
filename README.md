@@ -5,11 +5,11 @@
 # Features
 
 **Fetch Latest News**
-  * News by Category**: Browse news articles by specific categories (e.g., business, technology, health).
-  * Search Functionality**: Easily search for specific articles using keywords.
-  * Pagination**: Load articles in pages for a better user experience.
-  * Favorites**: Mark articles as favorites or delete them using Room for local caching.
-  * Offline Access**: View previously fetched news articles even without an internet connection, thanks to caching.
+  * News by Category: Browse news articles by specific categories (e.g., business, technology, health).
+  * Search Functionality: Easily search for specific articles using keywords.
+  * Pagination: Load articles in pages for a better user experience.
+  * Favorites: Mark articles as favorites or delete them using Room for local caching.
+  * Offline Access: View previously fetched news articles even without an internet connection, thanks to caching.
 
  # Libraries And Technoligies used
 
