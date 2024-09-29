@@ -43,7 +43,7 @@ fun FavoritesScreen(
     viewModel: FavoritesNewsViewModel= hiltViewModel(),
     navController: NavController
 ) {
-    val articles by viewModel.allArticles.collectAsStateWithLifecycle()
+    val articles by viewModel.favoriteArticles.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -54,7 +54,7 @@ fun FavoritesScreen(
             FavoritesItem(
                 article = article,
                 navController = navController,
-                onDelete = { viewModel.deleteNews(article) }
+                onDelete = { viewModel.deleteFavoriteNews(article) }
             )
         }
     }

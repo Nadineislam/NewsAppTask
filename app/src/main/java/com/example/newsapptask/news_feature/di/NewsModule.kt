@@ -1,6 +1,7 @@
 package com.example.newsapptask.news_feature.di
 
 import android.content.Context
+import android.net.ConnectivityManager
 import androidx.room.Room
 import com.example.newsapptask.BuildConfig
 import com.example.newsapptask.news_feature.data.db.ArticleDao
@@ -24,12 +25,14 @@ object NewsModule {
     @Provides
     @Singleton
     fun providesArticleDatabase(@ApplicationContext context: Context): ArticleDatabase =
-        Room.databaseBuilder(context, ArticleDatabase::class.java,"postDatabase")
+        Room.databaseBuilder(context, ArticleDatabase::class.java, "postDatabase")
+            .fallbackToDestructiveMigration()
             .build()
 
     @Provides
     fun providesArticleDao(articleDatabase: ArticleDatabase): ArticleDao =
         articleDatabase.getArticleDao()
+
     @Singleton
     @Provides
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
@@ -56,4 +59,10 @@ object NewsModule {
     @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager {
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 }

@@ -68,7 +68,7 @@ fun ArticleDetailsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.upsertNews(article)
+                    viewModel.upsertFavoriteNews(article)
                     Toast.makeText(context, "Article saved!", Toast.LENGTH_SHORT).show()
                 },
                 containerColor = MaterialTheme.colorScheme.primary
