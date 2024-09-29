@@ -14,7 +14,7 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertNews(article: List<Article>)
 
-    @Query("SELECT * FROM articles ")
+    @Query("SELECT * FROM articles WHERE isBreakingNews = 1")
     fun getAllArticles(): Flow<List<Article>>
 
     @Query("SELECT * FROM articles WHERE favorite = 1")
