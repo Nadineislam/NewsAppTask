@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -34,7 +33,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeNewsViewModel = hilt
         ResourceHandler(
             resource = breakingNews,
             loadingContent = {
-                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator()
+                }
             },
             successContent = { newsResponse ->
                 LazyRow(
