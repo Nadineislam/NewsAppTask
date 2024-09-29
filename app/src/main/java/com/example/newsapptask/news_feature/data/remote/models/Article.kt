@@ -18,5 +18,6 @@ data class Article(
     val url: String?,
     val urlToImage: String?,
     val favorite: Boolean = false,
-    val category: String?
+    val category: String?,
+    val isBreakingNews: Boolean = false
 ) :Parcelable

@@ -46,7 +46,6 @@ class HomeNewsViewModel @Inject constructor(
         getBreakingNews("us")
         getNewsByCategory(_selectedCategory.value)
     }
-
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         if (isInternetAvailable()) {
             when (val resource = breakingNewsUseCase(countryCode, breakingNewsPage)) {
@@ -62,44 +61,31 @@ class HomeNewsViewModel @Inject constructor(
                             }
                             breakingNewsResponse?.articles?.addAll(newArticles)
                         }
-                        _breakingNews.emit(
-                            Resource.Success(
-                                breakingNewsResponse?.articles ?: emptyList()
-                            )
-                        )
+                        _breakingNews.emit(Resource.Success(breakingNewsResponse?.articles ?: emptyList()))
                     }
                 }
                 is Resource.Error -> {
                     _breakingNews.emit(Resource.Error(resource.message ?: "Unknown error"))
                 }
-                is Resource.Loading -> {
-                    _breakingNews.emit(Resource.Loading())
-                }
+
+                is Resource.Loading -> {_breakingNews.emit(Resource.Loading())}
             }
         } else {
-            val cachedArticles = articlesUseCase().first()
-            if (cachedArticles.isNotEmpty()) {
-                _breakingNews.emit(Resource.Success(cachedArticles))
+            val cachedBreakingNews = articlesUseCase().first()
+            if (cachedBreakingNews.isNotEmpty()) {
+                _breakingNews.emit(Resource.Success(cachedBreakingNews))
             } else {
                 _breakingNews.emit(Resource.Error("No internet and no cached articles"))
             }
         }
     }
 
-
-    private fun isInternetAvailable(): Boolean {
-        val activeNetwork = connectivityManager.activeNetworkInfo
-        return activeNetwork?.isConnected == true
-    }
-
-
     fun getNewsByCategory(category: String) = viewModelScope.launch {
         _selectedCategory.emit(category)
-
         if (isInternetAvailable()) {
-            when (val response = newsByCategoryUseCase(category)) {
+            when (val resource = newsByCategoryUseCase(category)) {
                 is Resource.Success -> {
-                    response.data?.let { resultResponse ->
+                    resource.data?.let { resultResponse ->
                         val articlesWithCategory = resultResponse.articles.map { article ->
                             article.copy(category = category)
                         }
@@ -108,20 +94,24 @@ class HomeNewsViewModel @Inject constructor(
                     }
                 }
                 is Resource.Error -> {
-                    _newsByCategory.emit(Resource.Error(response.message ?: "Unknown error"))
+                    _newsByCategory.emit(Resource.Error(resource.message ?: "Unknown error"))
                 }
-                is Resource.Loading -> {
-                    _newsByCategory.emit(Resource.Loading())
-                }
+
+                is Resource.Loading -> {_newsByCategory.emit(Resource.Loading())}
             }
         } else {
-            val cachedArticles = newsRepository.getArticlesByCategory(category).first()
-            if (cachedArticles.isNotEmpty()) {
-                _newsByCategory.emit(Resource.Success(cachedArticles))
+            val cachedArticlesByCategory = newsRepository.getArticlesByCategory(category).first()
+            if (cachedArticlesByCategory.isNotEmpty()) {
+                _newsByCategory.emit(Resource.Success(cachedArticlesByCategory))
             } else {
                 _newsByCategory.emit(Resource.Error("No internet and no cached articles"))
             }
         }
+    }
+
+    private fun isInternetAvailable(): Boolean {
+        val activeNetwork = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 
 }

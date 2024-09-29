@@ -18,7 +18,10 @@ class NewsRepositoryImpl @Inject constructor(
             val response = newsApi.getNewsByCategory(category = category)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    articleDao.upsertNews(it.articles)
+                    val articlesWithCategory = it.articles.map { article ->
+                        article.copy(category = category, isBreakingNews = false)
+                    }
+                    articleDao.upsertNews(articlesWithCategory)
                     Resource.Success(it)
                 } ?: Resource.Error("No data found")
             } else {
@@ -29,13 +32,15 @@ class NewsRepositoryImpl @Inject constructor(
         }
     }
 
-
-    override suspend fun getBreakingNews(countryCode: String, pageNumber: Int) :Resource<NewsResponse>{
+    override suspend fun getBreakingNews(countryCode: String, pageNumber: Int): Resource<NewsResponse> {
         return try {
             val response = newsApi.getBreakingNews(countryCode, pageNumber)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    articleDao.upsertNews(it.articles)
+                    val articlesAsBreakingNews = it.articles.map { article ->
+                        article.copy(isBreakingNews = true, category = null)
+                    }
+                    articleDao.upsertNews(articlesAsBreakingNews)
                     Resource.Success(it)
                 } ?: Resource.Error("No data found")
             } else {
