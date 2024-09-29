@@ -41,8 +41,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeNewsViewModel = hilt
                     state = lazyListState,
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    val articles = newsResponse.articles
-                    items(articles, key = { article ->
+                    items(newsResponse, key = { article ->
                         "${article.title}-${article.publishedAt}-${article.url?.hashCode()}"
                     }) { article ->
                         BreakingNewsItem(article, onClick = {
@@ -78,9 +77,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeNewsViewModel = hilt
                 }
             },
             successContent = { newsResponse ->
-                val articles = newsResponse.articles
                 NewsList(
-                    newsArticles = articles,
+                    newsArticles = newsResponse,
                     onArticleClick = { article ->
                         navController.navigate(
                             "article_details?article=${Uri.encode(Gson().toJson(article))}"
