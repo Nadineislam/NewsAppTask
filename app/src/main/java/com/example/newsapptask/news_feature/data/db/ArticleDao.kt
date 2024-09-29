@@ -6,15 +6,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.newsapptask.news_feature.data.remote.models.Article
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(article: Article): Long
+    suspend fun upsertNews(article: Article)
 
     @Query("SELECT * FROM articles ")
-    fun getAllArticles(): List<Article>
+    fun getAllArticles(): Flow<List<Article>>
 
     @Delete
-    suspend fun delete(article: Article)
+    suspend fun deleteNews(article: Article)
 }
