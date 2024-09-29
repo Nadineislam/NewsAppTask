@@ -28,6 +28,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapptask.news_feature.data.remote.models.Article
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 @Composable
 fun NewsList(newsArticles: List<Article>, onArticleClick: (Article) -> Unit) {
@@ -79,7 +82,7 @@ fun NewsItem(article: Article, onClick: () -> Unit){
 
             Text(text = "Author: ${article.author ?: "Unknown"}")
 
-            Text(text = "Published at: ${article.publishedAt ?: "Unknown"}")
+            Text(text = "Published at: ${formatDate(article.publishedAt)}")
         }
     }
 }
@@ -120,3 +123,18 @@ fun BreakingNewsItem(article: Article,onClick: () -> Unit) {
         }
     }
 }
+
+fun formatDate(dateString: String?): String {
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+        val outputFormat = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
+
+        val date = dateString?.let { inputFormat.parse(it) }
+        date?.let { outputFormat.format(it) } ?: "Unknown"
+    } catch (e: Exception) {
+        "Unknown"
+    }
+}
+

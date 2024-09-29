@@ -118,7 +118,7 @@ fun ArticleDetailsScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Published at: ${article.publishedAt ?: "Unknown Date"}",
+                text = "Published at: ${formatDate(article.publishedAt)}",
                 style = MaterialTheme.typography.bodySmall,
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.onBackground
