@@ -4,7 +4,7 @@
 
 # Features
 
-**Fetch Latest News**: Get the most recent news articles from various sources.
+**Fetch Latest News**
   * News by Category**: Browse news articles by specific categories (e.g., business, technology, health).
   * Search Functionality**: Easily search for specific articles using keywords.
   * Pagination**: Load articles in pages for a better user experience.
