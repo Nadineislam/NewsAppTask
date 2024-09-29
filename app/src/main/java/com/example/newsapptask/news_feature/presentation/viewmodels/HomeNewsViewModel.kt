@@ -103,6 +103,7 @@ class HomeNewsViewModel @Inject constructor(
                         val articlesWithCategory = resultResponse.articles.map { article ->
                             article.copy(category = category)
                         }
+                        newsRepository.upsertNews(articlesWithCategory)
                         _newsByCategory.emit(Resource.Success(articlesWithCategory))
                     }
                 }
